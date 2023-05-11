@@ -1,0 +1,27 @@
+<h1 class="prod">Añadir producto</h1>
+<form id="form">
+    <label class="form__label">Nombre:</label><input type="text" name="name" id="name">
+    <label class="form__label">Descripción:</label><input type="text" name="des" id="des">
+    <label class="form__label">Precio:</label><input type="number" name="price" id="price">
+    <label class="form__label">Imagen (url):</label><input type="text" name="img" id="img">
+    <input type="submit" value="Agregar">
+</form>
+
+<h1 class="prod">Eliminar producto</h1>
+<p>(Respetar Mayúsculas y Minúsculas)</p>
+
+<form id="form1">
+    <label class="form__label">Nombre:</label><input type="text" id="pD"/>
+    <input type="submit" value="Eliminar">
+</form>
+
+
+
+<h2 class="prod">LISTA DE PRODUCTOS</h2>
+<div id="products"></div>
+
+
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/index.js"></script>

@@ -51,7 +51,6 @@ class ProductManager{
         return "El producto a eliminar no existe"  
     } 
 
-
     updateProducts = async (id, product) => {
         let productsId = await this.exist(id)
         if(!productsId) return "Producto no encontrado"

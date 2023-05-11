@@ -1,0 +1,13 @@
+.prod{
+    font-size: 25px;
+    margin: 2rem 0rem 2rem 0rem;
+}
+
+.prod__img{
+    max-width: 10rem;
+    margin-bottom: 2rem;
+}
+
+.form__label{
+    margin-right: 0.5rem;
+}
