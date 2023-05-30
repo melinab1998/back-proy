@@ -5,7 +5,9 @@ import { Server } from 'socket.io';
 import CartR from "./router/carts.routes.js";
 import handlebars from "express-handlebars";
 import viewsRouter from "./router/views.routes.js"
-import ProductManager from "./controllers/ProductManager.js";
+import ProductManager from "./dao/filesystem/products.dao.js";
+import './db/db.js'
+import { errorHandler } from './middlewares/errorHandler.js';
 
 
 const app = express();
@@ -25,6 +27,10 @@ app.set("views", __dirname+"/views");
 app.use("/api/products", productR)
 app.use("/api/cart", CartR)
 app.use("/", viewsRouter)
+
+app.use(errorHandler);
+
+
 
 const httpServer = app.listen(PORT, ()=>{
     console.log(`Servidor Express Puerto ${PORT}`);
@@ -56,8 +62,5 @@ socketServer.on("connection", async(socket) => {
         let filter = allProducts.filter(prod => prod.title != deleteProd)
         socketServer.emit("productos", filter);
     });
-})
-
-
-
+});
 

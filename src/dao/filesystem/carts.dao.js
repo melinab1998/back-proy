@@ -1,6 +1,6 @@
 import {promises as fs} from "fs"
 import { nanoid } from "nanoid"
-import ProductManager from "./ProductManager.js"
+import ProductManager from "./products.dao.js"
 
 const productAll = new ProductManager
 

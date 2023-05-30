@@ -7,7 +7,7 @@ const productPrice = document.getElementById("price")
 const productImg = document.getElementById("img")
 const form = document.getElementById("form")
 const form1 = document.getElementById("form1")
-const productNameD = document.getElementById("nameD");
+
 
 socketClient.on("productos", (array) =>{
     let infoProducts = "";
