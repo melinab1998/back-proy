@@ -42,5 +42,36 @@ export const addProductToCartService = async (cid, pid) => {
 };
 
 
+export const deleteProductToCartService = async (cid, pid) => {
+  try{
+      const prodDelete = await cartDao.deleteProductFromCart(cid, pid)
+      if(!prodDelete) throw new Error('Error al eliminar el producto del carrito')
+    else return prodDelete;
+  } catch (error) {
+      console.log(error);
+  }
+};
 
-  
+export const deleteAllProductsFromCartService = async (cid) => {
+  try{
+     await cartDao.deleteAllProductsFromCart(cid)
+  } catch (error) {
+      console.log('Error al vaciar carrito');
+  }
+};
+
+/* export const updateCartService = async (cid, newData) => {
+  try{
+    await cartDao.updateCart(cid, newData)
+  } catch (error) {
+      console.log('Error al actualizar carrito');
+  }
+}; */
+
+export const updateProductQtyService = async (cid, pid, quantity) => {
+  try{
+    await cartDao.updateProductQty(cid, pid, quantity)
+  } catch (error) {
+      console.log('Error al actualizar la cantidad');
+  }
+};

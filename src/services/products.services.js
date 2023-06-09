@@ -7,13 +7,13 @@ import ProductManager from "../dao/filesystem/products.dao.js";
 import { __dirname } from "../path.js";
 const prodDao = new ProductManager(__dirname+'/daos/filesystem/products.json');  */
 
-export const getAllService = async () => {
-    try {
-     const docs = await prodDao.getProducts();
-     return docs;
-    } catch (error) {
-      console.log(error);
-    }
+export const getAllServices = async (page , limit, category , availability) => {
+  try {
+      const docs = await prodDao.getAllProducts(page , limit, category, availability)
+      return docs;
+  } catch (error) {
+      console.error(error);
+  }
 };
 
 export const getByIdService = async (id) => {
@@ -58,3 +58,31 @@ export const getByIdService = async (id) => {
       console.log(error);
     }
   };
+
+  export const getProductByService = async (key, value) => {
+    try {
+       const prod = await prodDao.getProductBy(key, value);
+       return prod;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  export const productSortService = async () => {
+    try {
+      const aggregation = await prodDao.productSort();
+      return aggregation
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  export const productSort1Service = async () => {
+    try {
+      const aggregation = await prodDao.productSort1();
+      return aggregation
+    } catch (error) {
+      console.log(error);
+    }
+  };
+ 

@@ -6,13 +6,17 @@ const cartSchema = new mongoose.Schema({
             {
                 product: {
                     type: mongoose.Schema.Types.ObjectId,
-                    ref: "products"
+                    ref: 'products',
                 },
                 quantity: Number
             }
         ],
         default: []
     }
+});
+
+cartSchema.pre('find', function(){
+    this.populate('products');
 });
 
 export const cartModel = mongoose.model('carts', cartSchema)

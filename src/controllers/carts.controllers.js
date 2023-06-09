@@ -2,7 +2,11 @@ import {
     getCartsService,
     getCartByIdService,
     addCartService,
-    addProductToCartService
+    addProductToCartService,
+    deleteProductToCartService,
+    deleteAllProductsFromCartService,
+   /*  updateCartService, */
+    updateProductQtyService 
   } from "../services/carts.services.js";
 
   export const getCartsController = async (req, res, next) => {
@@ -45,6 +49,47 @@ import {
       }
     }
   
+    export const deleteProductToCartController = async (req, res, next) => {
+      try {
+          const cart = await deleteProductToCartService(req.params.cid, req.params.pid)
+          res.json(cart);
+      } catch (error) {
+        next(error);
+        }
+      }
 
 
-  
+      export const deleteAllProductsFromCartController = async (req, res, next) => {
+          try {
+              const cart = await deleteAllProductsFromCartService(req.params.cid)
+              res.json(cart);
+          } catch (error) {
+            next(error);
+            }
+      }
+/* 
+    export const updateCartController = async (req, res, next) => {
+      try{
+        const cid = req.params.cid
+        const products = req.body
+        const cart = await updateCartService(cid, { products })
+        res.json(cart);
+      }catch (error) {
+        next(error);
+      }
+    } */
+       
+
+    export const updateProductQtyController = async (req, res, next) => {
+      
+      const cid= req.params.cid
+      const pid= req.params.pid
+      const quantity= req.body
+      const newQ = quantity.quantity
+      try {
+          const cart = await updateProductQtyService(cid, pid, newQ)
+          res.json(cart);
+      } catch (error) {
+        next(error);
+      }
+  }
