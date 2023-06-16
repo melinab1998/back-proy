@@ -35,4 +35,3 @@ form1.onsubmit = (e) =>{
     socketClient.emit("newProducts", deleteProd);
     document.querySelector("#pD").value = "";
 }
-

@@ -5,16 +5,47 @@ const viewsRouter = Router();
 const product = new ProductManager();
 
 
-viewsRouter.get("/", async(req, res) => {
+viewsRouter.get("/products", async(req, res) => {
     let allProducts = await product.getProducts()
+    const first_name = req.session.first_name;
+    const last_name = req.session.last_name;
     res.render("home", {
-        title: "Websockets + Handlebars",
-        products: allProducts
+        products: allProducts,
+        data: {first_name, last_name}
     })
 })
 
-viewsRouter.get("/realtimeproducts", (req, res) => {
-    res.render("realTimeProducts")
-});
+viewsRouter.get("/realtimeproducts", async(req, res) => {
+    let allProducts = await product.getProducts()
+    res.render("realTimeProducts",{
+        products: allProducts,
+        baseUrl: "http://localhost:8080"
+    })
+}); 
+ 
+viewsRouter.get('/',(req,res)=>{
+    res.render('login', {
+        baseUrl: "http://localhost:8080"
+    })
+})
 
+viewsRouter.get('/register',(req,res)=>{
+    res.render('register', {
+        baseUrl: "http://localhost:8080"
+    })
+})
+
+viewsRouter.get('/error-register',(req,res)=>{
+    res.render('errorRegister', {
+        baseUrl: "http://localhost:8080"
+    })
+})
+
+viewsRouter.get('/error-login',(req,res)=>{
+    res.render('errorLogin', {
+        baseUrl: "http://localhost:8080"
+    })
+})
+
+  
 export default viewsRouter;

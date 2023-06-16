@@ -15,13 +15,15 @@
     <input type="submit" value="Eliminar">
 </form>
 
-
-
-<h2 class="prod">LISTA DE PRODUCTOS</h2>
-<div id="products"></div>
-
-
-
+<h1 class="prod">LISTA DE PRODUCTOS</h1>
+{{#each products}}
+<div class="prod__wrapper">
+    <h2 class="prod__title">{{this.title}}</h2>
+    <p class="prod__des">{{this.description}}</p>
+    <p class="prod__price">${{this.price}}</p>
+    <img class="prod__img" src={{this.thumbnails}} alt="">
+</div>
+{{/each}}
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="js/index.js"></script>
