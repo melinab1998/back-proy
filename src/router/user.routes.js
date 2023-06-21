@@ -1,11 +1,18 @@
 import { Router } from 'express'
-import UserDao from '../dao/mongodb/user.dao.js'
+/* import UserDao from '../dao/mongodb/user.dao.js'
 import { userModel } from '../dao/mongodb/models/user.model.js'
-const userDao = new UserDao()
+const userDao = new UserDao() */
+import passport from 'passport';
+import { registerResponse, loginResponse, githubResponse } from '../controllers/users.controllers.js';
 
 const router = Router()
 
-router.post('/register', async (req, res) => {
+router.post('/register', passport.authenticate('register'), registerResponse);
+router.post('/login', passport.authenticate('login'), loginResponse)
+router.get('/register-github', passport.authenticate('github', { scope: [ 'user:email' ] }));
+router.get('/profile-github', passport.authenticate('github', { scope: [ 'user:email' ] }), githubResponse);
+
+/* router.post('/register', async (req, res) => {
   try {
     const userData = req.body
     const newUser = await userDao.createUser(userData)
@@ -37,7 +44,7 @@ router.post('/login', async (req, res) => {
     } catch (error) {
       console.log(error);
     }
-})
+}) */
 
 router.get('/logout', async(req, res) => {
   try {

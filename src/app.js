@@ -12,6 +12,9 @@ import usersRouter from './router/user.routes.js'
 import CartR from "./router/carts.routes.js";
 import session from 'express-session';
 import { errorHandler } from './middlewares/errorHandler.js';
+import passport from 'passport';
+import './passport/local.js'
+import './passport/github.js'
 /* import ProductManager from "./dao/filesystem/products.dao.js"; */
 
 const app = express();
@@ -25,6 +28,7 @@ app.use(express.urlencoded({extended : true}));
 
 app.use(errorHandler);
 app.use(express.static(__dirname + '/public'));
+
 
 app.engine("handlebars", handlebars.engine());
 app.set("view engine", "handlebars");
@@ -48,6 +52,8 @@ app.use(
   })
 )
 
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use("/api/products", productR)
 app.use("/api/cart", CartR)
