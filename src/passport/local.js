@@ -31,6 +31,7 @@ const login = async (req, email, password, done) =>{
 const signupStrategy = new LocalStrategy(strategyOptions, signup);
 const loginStrategy = new LocalStrategy(strategyOptions, login);
 
+
 passport.use('register', signupStrategy);
 passport.use('login', loginStrategy);
 

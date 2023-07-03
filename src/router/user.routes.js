@@ -1,9 +1,10 @@
 import { Router } from 'express'
 /* import UserDao from '../dao/mongodb/user.dao.js'
-import { userModel } from '../dao/mongodb/models/user.model.js'
-const userDao = new UserDao() */
+import { userModel } from '../dao/mongodb/models/user.model.js' 
+const userDao = new UserDao()  */
 import passport from 'passport';
-import { registerResponse, loginResponse, githubResponse } from '../controllers/users.controllers.js';
+import {isAuthenticated} from '../path.js'
+import { registerResponse, loginResponse, githubResponse, currentResponse } from '../controllers/users.controllers.js';
 
 const router = Router()
 
@@ -11,6 +12,12 @@ router.post('/register', passport.authenticate('register'), registerResponse);
 router.post('/login', passport.authenticate('login'), loginResponse)
 router.get('/register-github', passport.authenticate('github', { scope: [ 'user:email' ] }));
 router.get('/profile-github', passport.authenticate('github', { scope: [ 'user:email' ] }), githubResponse);
+router.get('/current', isAuthenticated, currentResponse);
+
+/* router.get('/', async (req, res) => {
+  const users = await userDao.getAllUsers()
+  res.json({ message: 'Users', users})
+}) */
 
 /* router.post('/register', async (req, res) => {
   try {

@@ -43,7 +43,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge: 10000
+      maxAge: 300000
     },
     store: new MongoStore({
       mongoUrl: 'mongodb+srv://admin:ylUI7FZmXovEDizv@cluster0.bocmmvr.mongodb.net/ecommerce',

@@ -1,5 +1,6 @@
 import { userModel } from "./models/user.model.js"; 
 import { createHash, isValidPassword } from '../../path.js';
+import { cartModel } from "./models/carts.model.js";
 
 export default class UserDao {
 
@@ -9,10 +10,12 @@ export default class UserDao {
       const existUser = await userModel.findOne({email});
       if(!existUser){
         if(email === 'adminCoder@coder.com' && password === 'adminCoder123'){
-          const newUser = await userModel.create({...user, password: createHash(password), role: 'admin'})
+          const newCart = await cartModel.create({ products: [] });
+          const newUser = await userModel.create({...user, password: createHash(password), role: 'admin', cart: newCart._id})
           return newUser;
         } else {
-          const newUser = await userModel.create({...user, password: createHash(password)})
+          const newCart = await cartModel.create({ products: [] });
+          const newUser = await userModel.create({...user, password: createHash(password), cart: newCart._id})
           return newUser;
         }
       } else {
@@ -63,5 +66,16 @@ export default class UserDao {
       throw new Error(error)
     }
   }
+
+  async getAllUsers() {
+    try {
+        const users = await userModel.find().populate('cart')
+        return users;
+    } catch (error) {
+        console.log(error);
+        throw new Error(error);
+    }
+}
+
 }
 
