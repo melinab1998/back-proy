@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
+import 'dotenv/config'
+import config from '../config.js'
 
-const connectionString = 'mongodb+srv://admin:ylUI7FZmXovEDizv@cluster0.bocmmvr.mongodb.net/ecommerce?retryWrites=true&w=majority';
+const connectionString = config.MONGO_ATLAS_URL;
 
 try {
     await mongoose.connect(connectionString);

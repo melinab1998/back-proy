@@ -1,6 +1,8 @@
 import express from "express";
 import bodyParser from 'body-parser'
 import './db/db.js'
+import 'dotenv/config';
+import config from "./config.js";
 import handlebars from "express-handlebars";
 import MongoStore from 'connect-mongo';
 import cookieParser from 'cookie-parser';
@@ -16,10 +18,20 @@ import passport from 'passport';
 import './passport/local.js'
 import './passport/github.js'
 /* import ProductManager from "./dao/filesystem/products.dao.js"; */
+/* const product = new ProductManager(); */
+import { Command } from 'commander';   
 
 const app = express();
-const PORT = 8080;
-/* const product = new ProductManager(); */
+
+const command = new Command();
+command
+    .option('-p <port>', 'port server', 8080) 
+command.parse();
+ 
+const PORT = command.opts().p;  
+
+/* const PORT = config.PORT || 8080; 
+ */
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -39,14 +51,14 @@ app.use(cookieParser());
 
 app.use(
   session({
-    secret: 'sessionKey',
+    secret: config.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
       maxAge: 300000
     },
     store: new MongoStore({
-      mongoUrl: 'mongodb+srv://admin:ylUI7FZmXovEDizv@cluster0.bocmmvr.mongodb.net/ecommerce',
+      mongoUrl: config.MONGO_ATLAS_URL,
       ttl: 60,
     }),
   })
@@ -61,12 +73,12 @@ app.use('/users', usersRouter)
 app.use("/views", viewsRouter)
 
 
-const httpServer = app.listen(PORT, ()=>{
+app.listen(PORT, ()=>{
   console.log(`Servidor Express Puerto ${PORT}`);
-});
+}); 
+ 
 
-
-const socketServer = new Server(httpServer); 
+/* const socketServer = new Server(httpServer);  */
 
 /* socketServer.on("connection", async(socket) => {
     console.log("Usuario Conectado", socket.id);
