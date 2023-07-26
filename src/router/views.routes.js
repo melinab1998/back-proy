@@ -1,8 +1,8 @@
 import { Router } from "express";
-import ProductManager from "../dao/filesystem/products.dao.js"
+/* import ProductManager from "../persistence/dao/filesystem/products.dao.js" */
 
 const viewsRouter = Router();
-const product = new ProductManager();
+/* const product = new ProductManager();
 
 
 viewsRouter.get("/products", async(req, res) => {
@@ -21,7 +21,7 @@ viewsRouter.get("/realtimeproducts", async(req, res) => {
         products: allProducts,
         baseUrl: "http://localhost:8080"
     })
-}); 
+});  */
  
 viewsRouter.get('/',(req,res)=>{
     res.render('login', {

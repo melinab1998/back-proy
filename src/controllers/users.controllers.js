@@ -1,5 +1,5 @@
-import UserDao from "../dao/mongodb/user.dao.js";
-const userDao = new UserDao();
+import { createUserService, loginUserService, getByIdService, getByEmailService, getAllUsersService} from "../services/user.services.js";
+import userDTO from "../persistence/dto/user.dto.js";
 
 export const registerResponse = (req, res, next)=>{
     try {
@@ -51,22 +51,11 @@ export const githubResponse = async(req, res, next)=>{
     }
 }
 
-
 export const currentResponse = async(req, res, next)=>{
     try {
-        const user = await userDao.getById(req.session.passport.user);
-        const { first_name, last_name, email, age, role, cart } = user;
-         res.json({
-            msg: 'Usuario Actual',
-            userData: {
-                first_name,
-                last_name,
-                email,
-                age,
-                role,
-                cart
-            }
-        }) 
+        const user = await getByIdService(req.session.passport.user)
+        const userDto = new userDTO(user);
+        res.send({'Usuario Actual': userDto});
     } catch (error) {
         next(error);
     }

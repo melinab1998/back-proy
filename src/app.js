@@ -7,7 +7,7 @@ import handlebars from "express-handlebars";
 import MongoStore from 'connect-mongo';
 import cookieParser from 'cookie-parser';
 import { __dirname } from "./path.js";
-import { Server } from 'socket.io';
+/* import { Server } from 'socket.io'; */
 import productR from "./router/product.routes.js";
 import viewsRouter from "./router/views.routes.js"
 import usersRouter from './router/user.routes.js'
@@ -19,7 +19,7 @@ import './passport/local.js'
 import './passport/github.js'
 /* import ProductManager from "./dao/filesystem/products.dao.js"; */
 /* const product = new ProductManager(); */
-import { Command } from 'commander';   
+import { Command } from 'commander';    
 
 const app = express();
 
@@ -28,10 +28,10 @@ command
     .option('-p <port>', 'port server', 8080) 
 command.parse();
  
-const PORT = command.opts().p;  
+const PORT = command.opts().p;   
 
-/* const PORT = config.PORT || 8080; 
- */
+/* const PORT = config.PORT || 8080;  */
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -71,6 +71,7 @@ app.use("/api/products", productR)
 app.use("/api/cart", CartR)
 app.use('/users', usersRouter)
 app.use("/views", viewsRouter)
+
 
 
 app.listen(PORT, ()=>{

@@ -1,10 +1,10 @@
 import { Router } from 'express'
-/* import UserDao from '../dao/mongodb/user.dao.js'
-import { userModel } from '../dao/mongodb/models/user.model.js' 
-const userDao = new UserDao()  */
+/* import UserDao from '../persistence/dao/mongodb/user.dao.js' */
+/* import { userModel } from '../dao/mongodb/models/user.model.js'  */
+/* const userDao = new UserDao()   */
 import passport from 'passport';
 import {isAuthenticated} from '../path.js'
-import { registerResponse, loginResponse, githubResponse, currentResponse } from '../controllers/users.controllers.js';
+import { registerResponse, loginResponse, githubResponse, currentResponse} from '../controllers/users.controllers.js';
 
 const router = Router()
 
@@ -13,6 +13,7 @@ router.post('/login', passport.authenticate('login'), loginResponse)
 router.get('/register-github', passport.authenticate('github', { scope: [ 'user:email' ] }));
 router.get('/profile-github', passport.authenticate('github', { scope: [ 'user:email' ] }), githubResponse);
 router.get('/current', isAuthenticated, currentResponse);
+
 
 /* router.get('/', async (req, res) => {
   const users = await userDao.getAllUsers()
@@ -52,7 +53,7 @@ router.post('/login', async (req, res) => {
       console.log(error);
     }
 }) */
-
+/* 
 router.get('/logout', async(req, res) => {
   try {
     req.session.destroy((err) => {
@@ -65,6 +66,6 @@ router.get('/logout', async(req, res) => {
 } catch (error) {
   console.log(error);
 }
-})
+}) */
 
 export default router

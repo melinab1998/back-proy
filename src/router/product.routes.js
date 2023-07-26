@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { roleMiddleware } from '../path.js';
 
 import {
   getAllController,
@@ -18,8 +19,8 @@ router.get('/:id', getByIdController);
 router.get('/sort/up', productSortController);
 router.get('/sort/down', productSort1Controller);
 router.get('/search/:key/:value', getProductByController);
-router.post('/', createController);
-router.put('/:id', updateController);
-router.delete('/:id', deleteController);
+router.post('/',  roleMiddleware('admin'), createController);
+router.put('/:id', roleMiddleware('admin'), updateController);
+router.delete('/:id', roleMiddleware('admin'), deleteController);
 
 export default router;

@@ -1,6 +1,7 @@
 import { userModel } from "./models/user.model.js"; 
-import { createHash, isValidPassword } from '../../path.js';
+import { createHash, isValidPassword } from '../../../path.js';
 import { cartModel } from "./models/carts.model.js";
+
 
 export default class UserDao {
 
@@ -39,7 +40,7 @@ export default class UserDao {
     } catch (error) {
       console.log(error);
     }
-  }
+  } 
 
   async getById(id){
     try {
@@ -57,7 +58,7 @@ export default class UserDao {
   async getByEmail(email){
     try {
       const userExist = await userModel.findOne({email}); 
-      // console.log(userExist);
+      console.log(userExist);
       if(userExist){
        return userExist
       } return false

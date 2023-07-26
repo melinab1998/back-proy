@@ -68,7 +68,7 @@ class CartManager {
 
 //Eliminar producto de un carrito  
 
-    deleteProductFromCart = async (cid, pid) => {
+/*     deleteProductFromCart = async (cid, pid) => {
         try {
             const cart = await cartModel.findById(cid)
             if(!cart) return 'No se encontró el carrito';
@@ -88,7 +88,33 @@ class CartManager {
           } catch(error) {
             console.log(error);
           }
-    }
+    } */
+
+    deleteProductFromCart = async (cid, pid) => {
+        try {
+          const cart = await cartModel.findById(cid)
+          if (!cart) return 'No se encontró el carrito';
+      
+          const product = await products.getProductsById(pid);
+          if (!product) return 'No se encontró el producto';
+      
+          const productIndex = cart.products.findIndex(prod => prod.product && prod.product.equals(product._id));
+      
+          if (productIndex !== -1) {
+            cart.products.splice(productIndex, 1);
+            await cart.save();
+            console.log('Producto borrado de carrito');
+            return cart;
+          } else {
+            console.log('No se encontró el producto en el carrito');
+            return null;
+          }
+      
+        } catch (error) {
+          console.log(error);
+          throw new Error('Error al eliminar producto del carrito');
+        }
+      }
 
 //Vaciar carrito
     
@@ -137,4 +163,3 @@ class CartManager {
 }
 
 export default CartManager;
-

@@ -20,3 +20,16 @@ export const isAuthenticated = (req, res, next) =>{
     res.status(401).json({ error: 'Unauthorized' });
     
 };
+
+//
+
+export const roleMiddleware = (requiredRole) => (req, res, next) => {
+  if (!req.user || !req.user.role) {
+    return res.status(401).json({ message: 'Unauthorized'});
+  }
+  if (req.user.role === requiredRole) {
+    return next();
+  } else {
+    return res.status(403).json({ message: 'No tienes permiso para realizar esta acción'});
+  }
+};

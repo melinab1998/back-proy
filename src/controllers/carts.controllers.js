@@ -5,9 +5,14 @@ import {
     addProductToCartService,
     deleteProductToCartService,
     deleteAllProductsFromCartService,
-   /*  updateCartService, */
     updateProductQtyService 
   } from "../services/carts.services.js";
+
+  import {createTicketService} from '../services/ticket.services.js'
+  import {updateService} from '../services/products.services.js'
+  import { v4 as uuidv4 } from 'uuid'
+  import { sendGmail } from '../controllers/email.controller.js'
+
 
   export const getCartsController = async (req, res, next) => {
     try {
@@ -93,3 +98,73 @@ import {
         next(error);
       }
   }
+
+  export const ticketController = async(req, res, next) => {
+
+    try {
+      const ticket = [];
+      const outOfStock = [];
+
+      const cart = await getCartByIdService(req.params.cid);
+
+      for (const item of cart.products) {
+        if (item.quantity <= item.product.stock) {
+          ticket.push(item);
+  
+          const newStock = item.product.stock - item.quantity;
+          await updateService(item.product._id, { stock: newStock });
+        } else {
+          outOfStock.push(item);
+        }
+      }
+  
+      const totalPrice = ticket.reduce((acc, item) => {
+        const productPrice = item.product.price;
+        const quantity = item.quantity;
+        const itemTotalPrice = productPrice * quantity;
+        return acc + itemTotalPrice;
+      }, 0);
+  
+      const userEmail = req.user.email;
+      const userName = req.user.first_name;
+  
+      const code = uuidv4();
+  
+      const ticketData = {
+        code,
+        purchase_datetime: new Date(),
+        amount: totalPrice,
+        purchaser: userEmail,
+      };
+  
+      const emailOptions = {
+        name: userName,
+      };
+  
+      const newTicket = await createTicketService(ticketData);
+  
+      try {
+       
+        await sendGmail(emailOptions, ticketData);
+  
+        
+        if (outOfStock.length > 0) {
+          return res.status(200).send({ ticket: newTicket, productosSinStock: outOfStock });
+        } else {
+          res.status(200).send({ newTicket });
+        }
+      } catch (error) {
+        console.log(error);
+        res.status(500).send({ error: 'Error al enviar el correo electrónico' });
+      }
+  
+      for (const item of ticket) {
+        const productId = item.product._id;
+        console.log({ item: productId });
+        await deleteProductToCartService(req.params.cid, productId);
+      }
+    } catch (error) {
+      next(error);
+    }
+  };
+

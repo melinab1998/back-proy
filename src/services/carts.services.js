@@ -1,77 +1,41 @@
-import CartManager from "../dao/mongodb/carts.dao.js"
+import CartRepository from "../persistence/repository/carts.repository.js";
+import CartManager from '../persistence/dao/mongodb/carts.dao.js'
 
-const cartDao = new CartManager();
+const dao = new CartManager();
+const cartRepository = new CartRepository(dao);
 
 export const getCartsService = async () => {
-    try {
-     const docs = await cartDao.getCarts();
-     return docs;
-    } catch (error) {
-      console.log(error);
-    }
-};
+  const getCarts = await cartRepository.getCarts();
+  return getCarts;
+}
 
 export const getCartByIdService = async(id) => {
-    try {
-      const doc = await cartDao.getCartById(id);
-      if(!doc) throw new Error('Carrito no encontrado')
-      else return doc;
-    } catch (error) {
-      console.log(error);
-    }
-};
+  const getById = await cartRepository.getCartById(id);
+  return getById;
+}
 
 export const addCartService = async(obj) => {
-    try {
-      const newCart = await cartDao.addCart(obj);
-      if(!newCart) throw new Error('Error de Validación')
-      else return newCart;
-    } catch (error) {
-      console.log(error);
-    }
-};
+  const newCart = await cartRepository.addCart(obj);
+  return newCart;
+}
 
-export const addProductToCartService = async (cid, pid) => {
-    try{
-        const newProd = await cartDao.addProductToCart(cid, pid)
-        if(!newProd) throw new Error('Error al añadir producto al carrito')
-      else return newProd;
-    } catch (error) {
-        console.log(error);
-    }
-};
+export const addProductToCartService = async(cid, pid) => {
+  const newProd = await cartRepository.addProductToCart(cid, pid);
+  return newProd;
+}
+
+export const deleteProductToCartService = async(cid, pid) => {
+  const delProd = await cartRepository.deleteProductFromCart(cid, pid);
+  return delProd;
+}
+
+export const deleteAllProductsFromCartService = async(cid) => {
+  const delAll = await cartRepository.deleteAllProductsFromCart(cid);
+  return delAll;
+}
 
 
-export const deleteProductToCartService = async (cid, pid) => {
-  try{
-      const prodDelete = await cartDao.deleteProductFromCart(cid, pid)
-      if(!prodDelete) throw new Error('Error al eliminar el producto del carrito')
-    else return prodDelete;
-  } catch (error) {
-      console.log(error);
-  }
-};
-
-export const deleteAllProductsFromCartService = async (cid) => {
-  try{
-     await cartDao.deleteAllProductsFromCart(cid)
-  } catch (error) {
-      console.log('Error al vaciar carrito');
-  }
-};
-
-/* export const updateCartService = async (cid, newData) => {
-  try{
-    await cartDao.updateCart(cid, newData)
-  } catch (error) {
-      console.log('Error al actualizar carrito');
-  }
-}; */
-
-export const updateProductQtyService = async (cid, pid, quantity) => {
-  try{
-    await cartDao.updateProductQty(cid, pid, quantity)
-  } catch (error) {
-      console.log('Error al actualizar la cantidad');
-  }
-};
+export const updateProductQtyService = async(cid, pid, quantity) => {
+  const upQty = await cartRepository.updateProductQty(cid, pid, quantity);
+  return upQty;
+}
