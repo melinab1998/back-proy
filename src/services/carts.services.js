@@ -5,37 +5,67 @@ const dao = new CartManager();
 const cartRepository = new CartRepository(dao);
 
 export const getCartsService = async () => {
-  const getCarts = await cartRepository.getCarts();
-  return getCarts;
+  try {
+    const getCarts = await cartRepository.getCarts();
+     return getCarts;
+   } catch (error){
+     throw new Error(error.message);
+   }
 }
 
 export const getCartByIdService = async(id) => {
-  const getById = await cartRepository.getCartById(id);
-  return getById;
+  try {
+    const getById = await cartRepository.getCartById(id);
+    return getById;
+  } catch (error) {
+    throw new Error(error.message);
+  }
 }
 
 export const addCartService = async(obj) => {
-  const newCart = await cartRepository.addCart(obj);
-  return newCart;
+  try {
+    const newCart = await cartRepository.addCart(obj);
+    return newCart;
+  } catch (error) {
+    throw new Error(error.message);
+  }
 }
 
 export const addProductToCartService = async(cid, pid) => {
-  const newProd = await cartRepository.addProductToCart(cid, pid);
-  return newProd;
+  try {
+    const newProd = await cartRepository.addProductToCart(cid, pid);
+    return newProd;
+  } catch (error) {
+    throw new Error(error.message);
+  }
 }
 
 export const deleteProductToCartService = async(cid, pid) => {
-  const delProd = await cartRepository.deleteProductFromCart(cid, pid);
-  return delProd;
+  try {
+    const delProd = await cartRepository.deleteProductFromCart(cid, pid);
+    return delProd;
+  } catch (error) {
+    throw new Error(error.message);
+  }
 }
 
 export const deleteAllProductsFromCartService = async(cid) => {
-  const delAll = await cartRepository.deleteAllProductsFromCart(cid);
-  return delAll;
+  try {
+    const delAll = await cartRepository.deleteAllProductsFromCart(cid);
+    return delAll;
+  } catch (error) {
+    throw new Error(error.message);
+  }
 }
 
 
 export const updateProductQtyService = async(cid, pid, quantity) => {
-  const upQty = await cartRepository.updateProductQty(cid, pid, quantity);
-  return upQty;
+  try {
+    const upQty = await cartRepository.updateProductQty(cid, pid, quantity);
+    return upQty;
+  } catch (error) {
+    throw new Error(error.message);
+  }
 }
+
+

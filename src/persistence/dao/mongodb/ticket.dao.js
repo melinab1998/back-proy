@@ -7,7 +7,7 @@ async createTicket(obj){
         const ticket = await ticketModel.create(obj);
         return ticket;
       } catch (error){
-        console.log(error);
+        throw new Error(error.message)
       }
 }
 }

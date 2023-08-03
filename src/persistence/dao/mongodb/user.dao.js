@@ -23,8 +23,7 @@ export default class UserDao {
         return false;
       }
     } catch (error) {
-      console.log(error)
-      throw new Error(error)
+      throw new Error(error.message)
     }
   }
 
@@ -38,7 +37,7 @@ export default class UserDao {
         else return userExist;
       } return false
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message)
     }
   } 
 
@@ -50,8 +49,7 @@ export default class UserDao {
        return userExist
       } return false
     } catch (error) {
-      console.log(error)
-      // throw new Error(error)
+      throw new Error(error.message)
     }
   }
 
@@ -63,8 +61,7 @@ export default class UserDao {
        return userExist
       } return false
     } catch (error) {
-      console.log(error)
-      throw new Error(error)
+      throw new Error(error.message)
     }
   }
 
@@ -73,8 +70,7 @@ export default class UserDao {
         const users = await userModel.find().populate('cart')
         return users;
     } catch (error) {
-        console.log(error);
-        throw new Error(error);
+      throw new Error(error.message)
     }
 }
 

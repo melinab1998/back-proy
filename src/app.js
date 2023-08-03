@@ -38,7 +38,7 @@ app.use(bodyParser.json());
 app.use(express.json())
 app.use(express.urlencoded({extended : true}));
 
-app.use(errorHandler);
+
 app.use(express.static(__dirname + '/public'));
 
 
@@ -72,7 +72,7 @@ app.use("/api/cart", CartR)
 app.use('/users', usersRouter)
 app.use("/views", viewsRouter)
 
-
+app.use(errorHandler);
 
 app.listen(PORT, ()=>{
   console.log(`Servidor Express Puerto ${PORT}`);

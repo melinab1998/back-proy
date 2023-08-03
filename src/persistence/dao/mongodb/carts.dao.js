@@ -14,7 +14,7 @@ class CartManager {
             const carts = cartModel.find();
             return carts;
         } catch (error) {
-            console.log(error);
+            throw new Error(error.message)
         }
     }
 
@@ -25,7 +25,7 @@ class CartManager {
             const cartById = cartModel.findOne({_id: id}).populate('products.product')
             return cartById ? cartById : {};
         } catch (error) {
-            console.log(error);
+            throw new Error(error.message)
             return {}
         }
     }
@@ -37,7 +37,7 @@ class CartManager {
             cartModel.create({products: []});
             return {message: 'Carrito creado'};
         } catch (error) {
-            console.log(error);
+          throw new Error(error.message)
         }
     }
 
@@ -62,7 +62,7 @@ class CartManager {
                 return 'Producto agregado al carrito';
             }
         } catch (error) {
-            console.log(error);
+          throw new Error(error.message)
         }
     }
 
@@ -111,8 +111,7 @@ class CartManager {
           }
       
         } catch (error) {
-          console.log(error);
-          throw new Error('Error al eliminar producto del carrito');
+          throw new Error(error.message)
         }
       }
 
@@ -123,7 +122,7 @@ class CartManager {
       await cartModel.updateOne({ _id: cid }, { products: []});
       console.log('Carrito vaciado');
     } catch(error) {
-      console.log(error);
+      throw new Error(error.message)
     }
   }
 
@@ -157,7 +156,7 @@ class CartManager {
               await cart.save();
               return cart
             } catch(error) {
-            console.log(error);
+              throw new Error(error.message)
             }
         }
 }

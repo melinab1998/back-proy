@@ -5,28 +5,47 @@ const dao = new UserDao();
 const userRepository = new UserRepository(dao);
 
 
-export const createUserService = async(obj) => {
-    const newUser = await userRepository.createUser(obj);
-    return newUser;
-}
-
-export const loginUserService = async(obj) => {
-    const newLogin = await userRepository.loginUser(obj);
-    return newLogin;
-}
-
-export const getByIdService = async(id) => {
-    const getNew = await userRepository.getById(id);
-    return getNew;
-}
-
-export const getByEmailService = async(email) => {
-    const getNewEmail = await userRepository.getByEmail(email);
-    return getNewEmail;
-}
-
-export const getAllUsersService = async() => {
-    const getAll = await userRepository.getAllUsers();
-    return getAll;
-}
-
+export const createUserService = async (obj) => {
+    try {
+      const newUser = await userRepository.createUser(obj);
+      return newUser;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+  
+  export const loginUserService = async (obj) => {
+    try {
+      const newLogin = await userRepository.loginUser(obj);
+      return newLogin;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+  
+  export const getByIdService = async (id) => {
+    try {
+      const getNew = await userRepository.getById(id);
+      return getNew;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+  
+  export const getByEmailService = async (email) => {
+    try {
+      const getNewEmail = await userRepository.getByEmail(email);
+      return getNewEmail;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+  
+  export const getAllUsersService = async () => {
+    try {
+      const getAll = await userRepository.getAllUsers();
+      return getAll;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };

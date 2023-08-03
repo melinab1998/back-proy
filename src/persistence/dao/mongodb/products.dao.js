@@ -20,7 +20,7 @@ export default class ProductsDaoMongoDB {
         const response = await ProductsModel.paginate(query, { page, limit });
         return response;
       } catch (error) {
-        console.error(error);
+        throw new Error(error.message)
       } 
     }
   
@@ -31,7 +31,7 @@ export default class ProductsDaoMongoDB {
         const response = await ProductsModel.findById(id);
         return response;
       } catch (error) {
-        console.log(error);
+        throw new Error(error.message)
       }
     }
   
@@ -42,7 +42,7 @@ export default class ProductsDaoMongoDB {
         const response = await ProductsModel.create(obj);
         return response;
       } catch (error) {
-        console.log(error);
+        throw new Error(error.message)
       }
     }
 
@@ -53,7 +53,7 @@ export default class ProductsDaoMongoDB {
         await ProductsModel.updateOne({_id: id}, obj);
         return obj;
       } catch (error) {
-        console.log(error);
+        throw new Error(error.message)
       }
     }
 
@@ -64,7 +64,7 @@ export default class ProductsDaoMongoDB {
         const response = await ProductsModel.findByIdAndDelete(id);
         return response;
       } catch (error) {
-        console.log(error);
+        throw new Error(error.message)
       }
     }
 
@@ -77,7 +77,7 @@ export default class ProductsDaoMongoDB {
           const response = await ProductsModel.find(query)
           return response
       } catch (error) {
-          console.log(error)
+        throw new Error(error.message)
       };
   };
 
@@ -96,7 +96,7 @@ export default class ProductsDaoMongoDB {
       ])
       return response;
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message)
     }
   }
 
@@ -115,7 +115,7 @@ export default class ProductsDaoMongoDB {
       ])
       return response;
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message)
     }
   }
 
