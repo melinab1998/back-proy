@@ -12,13 +12,14 @@ import {
   import {updateService} from '../services/products.services.js'
   import { v4 as uuidv4 } from 'uuid'
   import { sendGmail } from '../controllers/email.controller.js'
-
+  import {logger} from '../utils/logger.js'
 
   export const getCartsController = async (req, res, next) => {
     try {
      const docs = await getCartsService();
      res.json(docs);
-    } catch (error) {
+    } catch (error){
+      logger.error(error.message)
       next(error);
     }
   };
@@ -29,6 +30,7 @@ import {
       const doc = await getCartByIdService(id);
       res.json(doc);
     } catch (error) {
+      logger.error(error.message)
       next(error);
     }
   };
@@ -41,6 +43,7 @@ import {
       });
       res.json(newDoc);
     } catch (error) {
+      logger.error(error.message)
       next(error);
     }
   };
@@ -50,6 +53,7 @@ import {
         const cart = await addProductToCartService(req.params.cid, req.params.pid)
         res.json(cart);
     } catch (error) {
+      logger.error(error.message)
       next(error);
       }
     }
@@ -59,6 +63,7 @@ import {
           const cart = await deleteProductToCartService(req.params.cid, req.params.pid)
           res.json(cart);
       } catch (error) {
+        logger.error(error.message)
         next(error);
         }
       }
@@ -69,6 +74,7 @@ import {
               const cart = await deleteAllProductsFromCartService(req.params.cid)
               res.json(cart);
           } catch (error) {
+            logger.error(error.message)
             next(error);
             }
       }
@@ -95,6 +101,7 @@ import {
           const cart = await updateProductQtyService(cid, pid, newQ)
           res.json(cart);
       } catch (error) {
+        logger.error(error.message)
         next(error);
       }
   }
@@ -164,6 +171,7 @@ import {
         await deleteProductToCartService(req.params.cid, productId);
       }
     } catch (error) {
+      logger.error(error.message)
       next(error);
     }
   };

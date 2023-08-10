@@ -1,6 +1,6 @@
 import {cartModel} from './models/carts.model.js'
 import ProductsDaoMongoDB from './products.dao.js'
-
+import {logger} from '../../../utils/logger.js'
 
 const products = new ProductsDaoMongoDB();
 
@@ -14,6 +14,7 @@ class CartManager {
             const carts = cartModel.find();
             return carts;
         } catch (error) {
+            logger.error(error.message)
             throw new Error(error.message)
         }
     }
@@ -25,6 +26,7 @@ class CartManager {
             const cartById = cartModel.findOne({_id: id}).populate('products.product')
             return cartById ? cartById : {};
         } catch (error) {
+            logger.error(error.message)
             throw new Error(error.message)
             return {}
         }
@@ -37,6 +39,7 @@ class CartManager {
             cartModel.create({products: []});
             return {message: 'Carrito creado'};
         } catch (error) {
+          logger.error(error.message)
           throw new Error(error.message)
         }
     }
@@ -62,6 +65,7 @@ class CartManager {
                 return 'Producto agregado al carrito';
             }
         } catch (error) {
+          logger.error(error.message)
           throw new Error(error.message)
         }
     }
@@ -110,7 +114,8 @@ class CartManager {
             return null;
           }
       
-        } catch (error) {
+        } catch (error){
+          logger.error(error.message)
           throw new Error(error.message)
         }
       }
@@ -122,6 +127,7 @@ class CartManager {
       await cartModel.updateOne({ _id: cid }, { products: []});
       console.log('Carrito vaciado');
     } catch(error) {
+      logger.error(error.message)
       throw new Error(error.message)
     }
   }
@@ -156,6 +162,7 @@ class CartManager {
               await cart.save();
               return cart
             } catch(error) {
+              logger.error(error.message)
               throw new Error(error.message)
             }
         }

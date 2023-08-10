@@ -1,4 +1,5 @@
 import { createProductsMock } from "../services/productsfake.services.js";
+import {logger} from '../utils/logger.js'
 
 export const createProductsCtr = async (req, res) => {
     const { cant } = req.query;
@@ -6,6 +7,6 @@ export const createProductsCtr = async (req, res) => {
       const response = await createProductsMock(cant)
       res.status(200).json({ products: response });
     } catch (error) {
-      console.log(error);
+      logger.error(error.message)
     }
   };

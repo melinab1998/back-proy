@@ -1,6 +1,7 @@
 import { transporter } from "../services/email.services.js";
 import 'dotenv/config';
 import config from "../config.js";
+import {logger} from '../utils/logger.js'
 
 export const sendGmail = async (emailOptions, ticketData) => {
   try {
@@ -24,6 +25,7 @@ export const sendGmail = async (emailOptions, ticketData) => {
     console.log('Email enviado!');
     return response;
   } catch (error) {
+    logger.error(error.message)
     throw error;
   }
 };

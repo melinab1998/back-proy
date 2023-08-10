@@ -1,4 +1,5 @@
 import { ProductsModel } from "./models/products.model.js";
+import {logger} from '../../../utils/logger.js'
 
 export default class ProductsDaoMongoDB {
 
@@ -19,7 +20,8 @@ export default class ProductsDaoMongoDB {
     
         const response = await ProductsModel.paginate(query, { page, limit });
         return response;
-      } catch (error) {
+      } catch (error){
+        logger.error(error.message)
         throw new Error(error.message)
       } 
     }
@@ -31,6 +33,7 @@ export default class ProductsDaoMongoDB {
         const response = await ProductsModel.findById(id);
         return response;
       } catch (error) {
+        logger.error(error.message)
         throw new Error(error.message)
       }
     }
@@ -42,6 +45,7 @@ export default class ProductsDaoMongoDB {
         const response = await ProductsModel.create(obj);
         return response;
       } catch (error) {
+        logger.error(error.message)
         throw new Error(error.message)
       }
     }
@@ -53,6 +57,7 @@ export default class ProductsDaoMongoDB {
         await ProductsModel.updateOne({_id: id}, obj);
         return obj;
       } catch (error) {
+        logger.error(error.message)
         throw new Error(error.message)
       }
     }
@@ -64,6 +69,7 @@ export default class ProductsDaoMongoDB {
         const response = await ProductsModel.findByIdAndDelete(id);
         return response;
       } catch (error) {
+        logger.error(error.message)
         throw new Error(error.message)
       }
     }
@@ -77,6 +83,7 @@ export default class ProductsDaoMongoDB {
           const response = await ProductsModel.find(query)
           return response
       } catch (error) {
+        logger.error(error.message)
         throw new Error(error.message)
       };
   };
@@ -96,6 +103,7 @@ export default class ProductsDaoMongoDB {
       ])
       return response;
     } catch (error) {
+      logger.error(error.message)
       throw new Error(error.message)
     }
   }
@@ -115,6 +123,7 @@ export default class ProductsDaoMongoDB {
       ])
       return response;
     } catch (error) {
+      logger.error(error.message)
       throw new Error(error.message)
     }
   }

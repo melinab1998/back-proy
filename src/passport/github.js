@@ -1,6 +1,7 @@
 import { Strategy as GithubStrategy } from 'passport-github2';
 import passport from 'passport';
 import UserDao from '../persistence/dao/mongodb/user.dao.js';
+import {logger} from '../utils/logger.js'
 const userDao = new UserDao();
 
 const strategyOptions = {
@@ -10,7 +11,7 @@ const strategyOptions = {
 };
 
 const registerOrLogin = async(accessToken, refreshToken, profile, done) =>{
-    console.log('profile:::', profile);
+    logger.info('profile:::', profile)
     const email = profile._json.email !== null ? profile._json.email : profile._json.blog;
     const user = await userDao.getByEmail(email);
     if(user) return done(null, user);

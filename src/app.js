@@ -12,6 +12,7 @@ import productR from "./router/product.routes.js";
 import viewsRouter from "./router/views.routes.js"
 import usersRouter from './router/user.routes.js'
 import CartR from "./router/carts.routes.js";
+import loggerRouter from './router/logger.routes.js'
 import session from 'express-session';
 import { errorHandler } from './middlewares/errorHandler.js';
 import passport from 'passport';
@@ -20,6 +21,7 @@ import './passport/github.js'
 /* import ProductManager from "./dao/filesystem/products.dao.js"; */
 /* const product = new ProductManager(); */
 import { Command } from 'commander';    
+import {logger} from './utils/logger.js'
 
 const app = express();
 
@@ -71,11 +73,11 @@ app.use("/api/products", productR)
 app.use("/api/cart", CartR)
 app.use('/users', usersRouter)
 app.use("/views", viewsRouter)
-
+app.use("/loggerTest", loggerRouter)
 app.use(errorHandler);
 
 app.listen(PORT, ()=>{
-  console.log(`Servidor Express Puerto ${PORT}`);
+  logger.info(`Servidor Express Puerto ${PORT}`);
 }); 
  
 

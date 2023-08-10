@@ -8,7 +8,7 @@ import {
     productSortService,
     productSort1Service
   } from "../services/products.services.js";
-
+import {logger} from '../utils/logger.js'
   
   export const getAllController = async (req, res, next) => {
     try {
@@ -37,7 +37,8 @@ import {
       prevLink,
       nextLink
      })
-    } catch (error) {
+    } catch (error){
+      logger.error(error.message)
       next(error);
     }
   };
@@ -48,6 +49,7 @@ import {
       const doc = await getByIdService(id);
       res.json(doc);
     } catch (error) {
+      logger.error(error.message)
       next(error);
     }
   };
@@ -67,6 +69,7 @@ import {
       });
       res.json(newDoc);
     } catch (error) {
+      logger.error(error.message)
       next(error);
     }
   };
@@ -81,6 +84,7 @@ import {
       });
       res.json(docUpd);
     } catch (error) {
+      logger.error(error.message)
       next(error);
     }
   };
@@ -91,6 +95,7 @@ import {
       await deleteService(id);
       res.json({message: 'Producto Eliminado'})
     } catch (error) {
+      logger.error(error.message)
       next(error);
     }
 };
@@ -102,6 +107,7 @@ export const getProductByController = async (req, res, next) => {
     const response = await getProductByService(key, value)
     res.json(response)
   } catch (error) {
+    logger.error(error.message)
     next(error);
   }
 };
@@ -111,6 +117,7 @@ export const productSortController = async(req, res, next)=>{
     const response = await productSortService();
     res.json(response);
   } catch (error) {
+    logger.error(error.message)
     next(error)
   }
 }
@@ -120,6 +127,7 @@ export const productSort1Controller = async(req, res, next)=>{
     const response = await productSort1Service();
     res.json(response);
   } catch (error) {
+    logger.error(error.message)
     next(error)
   }
 }

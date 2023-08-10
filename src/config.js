@@ -5,5 +5,6 @@ export default {
     MONGO_ATLAS_URL: process.env.MONGO_ATLAS_URL,
     SESSION_SECRET: process.env.SESSION_SECRET,
     EMAIL: process.env.EMAIL,
-    PASSWORD: process.env.PASSWORD
+    PASSWORD: process.env.PASSWORD,
+    NODE_ENV: process.env.NODE_ENV
 }

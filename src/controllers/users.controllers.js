@@ -1,5 +1,6 @@
 import { createUserService, loginUserService, getByIdService, getByEmailService, getAllUsersService} from "../services/user.services.js";
 import userDTO from "../persistence/dto/user.dto.js";
+import {logger} from '../utils/logger.js'
 
 export const registerResponse = (req, res, next)=>{
     try {
@@ -8,6 +9,7 @@ export const registerResponse = (req, res, next)=>{
             session: req.session    
         })
     } catch (error) {
+        logger.error(error.message)
         next(error);
     }
 };
@@ -28,6 +30,7 @@ export const loginResponse = async(req, res, next)=>{
             } */
         }) 
     } catch (error) {
+        logger.error(error.message)
         next(error);
     }
 }
@@ -47,6 +50,7 @@ export const githubResponse = async(req, res, next)=>{
             } */
         })
     } catch (error) {
+        logger.error(error.message)
         next(error);
     }
 }
@@ -57,6 +61,7 @@ export const currentResponse = async(req, res, next)=>{
         const userDto = new userDTO(user);
         res.send({'Usuario Actual': userDto});
     } catch (error) {
+        logger.error(error.message)
         next(error);
     }
 }

@@ -1,6 +1,7 @@
 import { userModel } from "./models/user.model.js"; 
 import { createHash, isValidPassword } from '../../../path.js';
 import { cartModel } from "./models/carts.model.js";
+import {logger} from '../../../utils/logger.js'
 
 
 export default class UserDao {
@@ -23,6 +24,7 @@ export default class UserDao {
         return false;
       }
     } catch (error) {
+      logger.error(error.message)
       throw new Error(error.message)
     }
   }
@@ -37,6 +39,7 @@ export default class UserDao {
         else return userExist;
       } return false
     } catch (error) {
+      logger.error(error.message)
       throw new Error(error.message)
     }
   } 
@@ -49,6 +52,7 @@ export default class UserDao {
        return userExist
       } return false
     } catch (error) {
+      logger.error(error.message)
       throw new Error(error.message)
     }
   }
@@ -61,6 +65,7 @@ export default class UserDao {
        return userExist
       } return false
     } catch (error) {
+      logger.error(error.message)
       throw new Error(error.message)
     }
   }
@@ -70,6 +75,7 @@ export default class UserDao {
         const users = await userModel.find().populate('cart')
         return users;
     } catch (error) {
+      logger.error(error.message)
       throw new Error(error.message)
     }
 }
