@@ -56,23 +56,31 @@ import {logger} from '../utils/logger.js'
   
   export const createController = async (req, res, next) => {
     try {
-      const { title, description, code, price, status, stock, category, thumbnails } = req.body;
-      const newDoc = await createService({
-        title,
-        description,
-        code,
-        price,
-        status,
-        stock,
-        category,
-        thumbnails
-      });
-      res.json(newDoc);
+        const { title, description, code, price, status, stock, category, thumbnails } = req.body;
+
+        let ownerId = '64bfc47a329120e07ce7d36b' // ID DEL ADMIN (DEFAULT)
+
+        if (req.user && req.user.role === 'premium'){
+            ownerId = req.user._id;
+        }
+
+        const newDoc = await createService({
+            title,
+            description,
+            code,
+            price,
+            status,
+            stock,
+            category,
+            thumbnails
+        }, ownerId);
+        
+        res.json(newDoc);
     } catch (error) {
-      logger.error(error.message)
-      next(error);
+        logger.error(error.message);
+        next(error);
     }
-  };
+};
   
   export const updateController = async (req, res, next) => {
     try {

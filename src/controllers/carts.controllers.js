@@ -13,6 +13,7 @@ import {
   import { v4 as uuidv4 } from 'uuid'
   import { sendGmail } from '../controllers/email.controller.js'
   import {logger} from '../utils/logger.js'
+  import { ProductsModel } from "../persistence/dao/mongodb/models/products.model.js";
 
   export const getCartsController = async (req, res, next) => {
     try {
@@ -48,15 +49,33 @@ import {
     }
   };
 
-  export const addProductToCartController = async (req, res, next) => {
-    try {
-        const cart = await addProductToCartService(req.params.cid, req.params.pid)
+    export const addProductToCartController = async (req, res, next) => {
+      try {
+        const cartId = req.params.cid;
+        const productId = req.params.pid;
+    
+        const currentUser = req.user;
+    
+        const isPremiumUser = currentUser && currentUser.role === 'premium';
+    
+        const product = await ProductsModel.findById(productId);
+    
+        if (!product) {
+          return res.status(404).json({ message: 'Producto no encontrado.' });
+        }
+  
+        if (isPremiumUser && product.owner.toString() === currentUser._id.toString()) {
+          return res.status(403).json({ message: 'No puedes agregar tu propio producto al carrito.' });
+        }
+    
+        const cart = await addProductToCartService(cartId, productId);
+    
         res.json(cart);
-    } catch (error) {
-      logger.error(error.message)
-      next(error);
+      } catch (error) {
+        logger.error(error.message);
+        next(error);
       }
-    }
+    };
   
     export const deleteProductToCartController = async (req, res, next) => {
       try {

@@ -4,7 +4,7 @@ import { Router } from 'express'
 /* const userDao = new UserDao()   */
 import passport from 'passport';
 import {isAuthenticated} from '../path.js'
-import { registerResponse, loginResponse, githubResponse, currentResponse} from '../controllers/users.controllers.js';
+import { registerResponse, loginResponse, githubResponse, currentResponse, toggleUserRole} from '../controllers/users.controllers.js';
 
 const router = Router()
 
@@ -13,7 +13,7 @@ router.post('/login', passport.authenticate('login'), loginResponse)
 router.get('/register-github', passport.authenticate('github', { scope: [ 'user:email' ] }));
 router.get('/profile-github', passport.authenticate('github', { scope: [ 'user:email' ] }), githubResponse);
 router.get('/current', isAuthenticated, currentResponse);
-
+router.put('/premium/:uid', toggleUserRole)
 
 /* router.get('/', async (req, res) => {
   const users = await userDao.getAllUsers()

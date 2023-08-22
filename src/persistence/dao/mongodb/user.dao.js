@@ -2,6 +2,7 @@ import { userModel } from "./models/user.model.js";
 import { createHash, isValidPassword } from '../../../path.js';
 import { cartModel } from "./models/carts.model.js";
 import {logger} from '../../../utils/logger.js'
+import bcrypt from 'bcrypt';
 
 
 export default class UserDao {
@@ -80,5 +81,26 @@ export default class UserDao {
     }
 }
 
+async updateUserPasswordAndEncrypt(email, newPassword) {
+  
+  try {
+    const user = await userModel.findOne({ email });
+    if (!user) {
+      throw new Error('Usuario no encontrado.');
+    }
+
+    const passwordsMatch = await bcrypt.compare(newPassword, user.password);
+    if (passwordsMatch) {
+      throw new Error('La nueva contraseña no puede ser igual a la contraseña anterior.');
+    }
+
+    user.password = createHash(newPassword);
+    await user.save();
+    logger.info(`Contraseña actualizada con éxito para el usuario: ${email}`);
+
+  } catch (error) {
+    throw error;
+  }
+}
 }
 

@@ -40,15 +40,15 @@ export default class ProductsDaoMongoDB {
   
  //Añadir productos
 
-    async addProducts(obj) {
-      try {
-        const response = await ProductsModel.create(obj);
-        return response;
-      } catch (error) {
-        logger.error(error.message)
-        throw new Error(error.message)
-      }
-    }
+ async addProducts(obj, ownerId) {
+  try {
+      const response = await ProductsModel.create({ ...obj, owner: ownerId });
+      return response;
+  } catch (error) {
+      logger.error(error.message);
+      throw new Error(error.message);
+  }
+}
 
   //Actualizar productos  
   

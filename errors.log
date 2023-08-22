@@ -1,2 +1,4 @@
 {"level":"error","message":"Mensaje de prueba en nivel error"}
 {"level":"fatal","message":"Mensaje de prueba en nivel fatal"}
+{"level":"error","message":"Mensaje de prueba en nivel error"}
+{"level":"fatal","message":"Mensaje de prueba en nivel fatal"}

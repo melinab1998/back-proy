@@ -25,15 +25,13 @@ export const getByIdService = async (id) => {
   }
 };
 
-// Repite el bloque try-catch para los demás servicios...
-
-export const createService = async (obj) => {
+export const createService = async (obj, ownerId) => {
   try {
-    const newProd = await productsRepository.addProducts(obj);
-    return newProd;
+      const newProd = await productsRepository.addProducts(obj, ownerId);
+      return newProd;
   } catch (error) {
-    logger.error(error.message)
-    throw new Error(error.message);
+      logger.error(error.message);
+      throw new Error(error.message);
   }
 };
 

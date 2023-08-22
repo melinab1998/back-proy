@@ -6,5 +6,6 @@ export default {
     SESSION_SECRET: process.env.SESSION_SECRET,
     EMAIL: process.env.EMAIL,
     PASSWORD: process.env.PASSWORD,
-    NODE_ENV: process.env.NODE_ENV
+    NODE_ENV: process.env.NODE_ENV,
+    JWT_SECRET: process.env.JWT_SECRET
 }

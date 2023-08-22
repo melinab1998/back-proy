@@ -1,0 +1,17 @@
+{{#if errorMessage}}
+<div>
+  {{errorMessage}}
+</div>
+{{/if}}
+
+<form action="/views/resetpass/{{ resetToken }}" method="post">
+  <input type="hidden" name="token" value="{{ resetToken }}"> 
+  
+  <label for="newPassword">Nueva Contraseña:</label>
+  <input type="password" id="newPassword" name="newPassword" required>
+  
+  <label for="confirmPassword">Confirmar Contraseña:</label>
+  <input type="password" id="confirmPassword" name="confirmPassword" required>
+  
+  <button type="submit">Restablecer Contraseña</button>
+</form>

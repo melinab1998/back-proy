@@ -20,7 +20,7 @@ const router = Router();
 router.get('/', getCartsController);
 router.get('/:id', getByIdController);
 router.post('/', createController);
-router.post('/:cid/products/:pid', roleMiddleware('user'), addProductToCartController); 
+router.post('/:cid/products/:pid', roleMiddleware(['user','premium']), addProductToCartController); 
 router.post('/:cid/purchase', isAuthenticated, ticketController) 
 router.delete('/:cid/products/:pid', deleteProductToCartController)
 router.delete('/:cid', deleteAllProductsFromCartController)
