@@ -1,0 +1,272 @@
+paths:
+  /api/cart/:
+    get:
+      summary: Obtener todos los carritos
+      tags:
+        - Carritos
+      responses:
+        "200":
+          description: Carritos obtenidos correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Cart"
+        "500":
+          description: Error del servidor
+    post:
+      summary: Crear un carrito 
+      tags:
+        - Carritos
+      responses:
+        "200":
+          description: El carrito fue creado correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Cart"
+        "500":
+          description: Error del servidor
+  /api/cart/{id}:
+    get:
+      summary: Obtener un carrito por su ID
+      tags:
+        - Carritos
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id del carrito que queremos obtener
+          schema:
+            $type: string
+      responses:
+        "200":
+          description: El carrito fue obtenido correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Cart"
+        "400":
+          description: El ID no fue encontrado
+  /api/cart/{cid}: 
+    delete:
+      summary: Eliminar todos los productos del carrito
+      tags: 
+        - Carritos
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Id del carrito que queremos vaciar
+          schema:
+            $type: string
+      responses:
+        "200":
+          description: El carrito fue vaciado
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Cart"
+        "400":
+          description: El ID no fue encontrado
+  /api/cart/{cid}/purchase:
+    post:
+      summary: Comprar un carrito por su ID
+      tags:
+        - Carritos
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Id del carrito que queremos comprar
+          schema:
+            $type: string
+      responses:
+        "200":
+          description: El carrito fue comprado correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Cart"
+        "400":
+          description: El ID no fue encontrado
+  /api/cart/{cid}/products/{pid}:
+    post:
+      summary: Añadir producto al carrito
+      tags:
+        - Carritos
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Id del carrito al cual agregar el producto
+          schema:
+            $type: integer
+        - name: pid
+          in: path
+          required: true
+          description: Id del producto a agregar al carrito
+          schema:
+            $type: integer
+      responses:
+        "200":
+          description: El producto fue añadido correctamente al carrito
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Cart"
+        "400":
+          description: El ID no fue encontrado
+    delete:
+      summary: Eliminar un producto del carrito
+      tags:
+        - Carritos
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Id del carrito 
+          schema:
+            $type: integer
+        - name: pid
+          in: path
+          required: true
+          description: id del producto que queremos eliminar 
+          schema:
+            $type: integer
+      responses:
+        "200":
+          description: El producto fue eliminado del carrito correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Cart"
+        "400":
+          description: El ID no fue encontrado
+    put:
+      summary: Actualizar la cantidad del producto
+      tags:
+        - Carritos
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Id del carrito 
+          schema:
+            $type: integer
+        - name: pid
+          in: path
+          required: true
+          description: Id del producto a actualizar
+          schema:
+            $type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/updateQuantity'
+      responses:
+        "200":
+          description: El producto del carrito fue actualizado correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Cart"
+        "400":
+          description: El ID no fue encontrado
+
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Id autogenerado por MongoDb
+        products: 
+          type: array
+          description: Array de productos y su cantidad
+          items:
+            $ref: '#/components/schemas/CartItem'
+    Product:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID autogenerado por MongoDb
+          example: 64e4b0393389cdc4c97cbf65
+        title:
+          type: string
+          description: Titulo del producto
+          example: Cuaderno Setter
+        description:
+          type: string
+          description: Descripción del producto
+          example: Con espiral, tapa de colores y papel 70 grs.
+        code:
+          type: string
+          description: Código del producto
+          example: myb8
+        price: 
+          type: number
+          description: Precio del producto
+          example: 1500
+        status:
+          type: boolean 
+          description: Disponibilidad del producto
+          example: true
+        stock: 
+          type: number
+          description: Cantidad del producto
+          example: 10
+        category: 
+          type: string
+          description: Categoría del producto
+          example: Librería
+        thumbnails:
+          type: array
+          description: Imágenes del producto
+          items:
+            type: string
+            example: producto0.jpg
+        owner:
+          type: string
+          description: Id del usuario creador del producto 
+          example: 64bfc47a329120e07ce7d36
+    CartItem:
+      type: object
+      properties:
+        product:
+          $ref: '#/components/schemas/Product'
+        quantity:
+          type: integer
+          description: La cantidad del producto en el carrito
+  requestBodies:
+      updateCart:
+        type: object
+        properties:
+          products:
+            type: array
+            description: Array de productos y su cantidad
+      updateQuantity:
+        type: object
+        properties:
+          quantity:
+            type: integer
+            description: Cantidad

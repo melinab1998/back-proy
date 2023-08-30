@@ -22,8 +22,14 @@ import './passport/github.js'
 /* const product = new ProductManager(); */
 import { Command } from 'commander';    
 import {logger} from './utils/logger.js'
+import swaggerUI from 'swagger-ui-express';
+import swaggerJSDoc from 'swagger-jsdoc';
+import { info } from "./docs/info.js";
 
 const app = express();
+
+const specs = swaggerJSDoc(info);
+app.use('/docs', swaggerUI.serve, swaggerUI.setup(specs));
 
 const command = new Command();
 command

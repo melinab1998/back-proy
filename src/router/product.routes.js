@@ -23,7 +23,7 @@ router.get('/sort/down', productSort1Controller);
 router.get('/search/:key/:value', getProductByController);
 router.post('/', roleMiddleware(['admin', 'premium']), createController);
 router.post('/mockingproducts', createProductsCtr)
-router.put('/:id', roleMiddleware(['admin', 'premium']), checkOwnership, updateController); //hacerpruebas
+router.put('/:id', roleMiddleware(['admin', 'premium']), checkOwnership, updateController); 
 router.delete('/:id', roleMiddleware(['admin', 'premium']), checkOwnershipOrAdmin, deleteController);
 
 export default router;
