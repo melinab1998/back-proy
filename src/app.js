@@ -86,6 +86,7 @@ app.listen(PORT, ()=>{
   logger.info(`Servidor Express Puerto ${PORT}`);
 }); 
  
+export default app;
 
 /* const socketServer = new Server(httpServer);  */
 

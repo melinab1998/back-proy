@@ -12,6 +12,14 @@ const logLevels = {
         debug: 5
     }
 
+
+logger = winston.createLogger({
+    level: "info",
+    levels: logLevels,
+    transports: [new winston.transports.Console()],
+});    
+
+
 if(config.NODE_ENV==="dev"){
      logger = winston.createLogger({
         level: "debug",

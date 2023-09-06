@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { roleMiddleware, checkOwnership, checkOwnershipOrAdmin } from '../path.js';
+import { roleMiddleware, checkOwnership, checkOwnershipOrAdmin} from '../path.js';
 
 import {
   getAllController,
@@ -21,7 +21,7 @@ router.get('/:id', getByIdController);
 router.get('/sort/up', productSortController);
 router.get('/sort/down', productSort1Controller);
 router.get('/search/:key/:value', getProductByController);
-router.post('/', roleMiddleware(['admin', 'premium']), createController);
+router.post('/', roleMiddleware(['admin', 'premium']), createController);  
 router.post('/mockingproducts', createProductsCtr)
 router.put('/:id', roleMiddleware(['admin', 'premium']), checkOwnership, updateController); 
 router.delete('/:id', roleMiddleware(['admin', 'premium']), checkOwnershipOrAdmin, deleteController);

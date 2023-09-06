@@ -17,12 +17,12 @@ export const registerResponse = (req, res, next)=>{
     }
 };
 
-export const loginResponse = async(req, res, next)=>{
-    try {
+/* export const loginResponse = async(req, res, next)=>{
+    try { */
        /*  const user = await userDao.getById(req.session.passport.user);
         const { first_name, last_name, email, age, role } = user; */
-         res.json({
-            msg: 'Login OK',
+        /*  res.json({
+            msg: 'Login OK', */
             /* session: req.session,
             userData: {
                 first_name,
@@ -31,12 +31,29 @@ export const loginResponse = async(req, res, next)=>{
                 age,
                 role
             } */
-        }) 
+   /*      }) 
     } catch (error) {
         logger.error(error.message)
         next(error);
     }
-}
+} */
+
+export const loginResponse = async (req, res, next) => {
+    try {
+        const user = req.user; 
+
+        if (!user) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+
+        res.status(200).json({
+            msg: 'Login OK'
+        });
+    } catch (error) {
+        logger.error(error.message);
+        next(error);
+    }
+};
 
 export const githubResponse = async(req, res, next)=>{
     try {
