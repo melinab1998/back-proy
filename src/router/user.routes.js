@@ -4,8 +4,8 @@ import { Router } from 'express'
 /* const userDao = new UserDao()   */
 import passport from 'passport';
 import {isAuthenticated} from '../path.js'
-import { registerResponse, loginResponse, githubResponse, currentResponse, toggleUserRole} from '../controllers/users.controllers.js';
-
+import { registerResponse, loginResponse, githubResponse, currentResponse, toggleUserRole, uploadDocuments} from '../controllers/users.controllers.js';
+import { uploader } from '../utils/multer.js'
 const router = Router()
 
 router.post('/register', passport.authenticate('register'), registerResponse);
@@ -14,6 +14,7 @@ router.get('/register-github', passport.authenticate('github', { scope: [ 'user:
 router.get('/profile-github', passport.authenticate('github', { scope: [ 'user:email' ] }), githubResponse);
 router.get('/current', isAuthenticated, currentResponse);
 router.put('/premium/:uid', toggleUserRole)
+router.post("/:uid/documents", uploader.array("uploads"), uploadDocuments)
 
 /* router.get('/', async (req, res) => {
   const users = await userDao.getAllUsers()

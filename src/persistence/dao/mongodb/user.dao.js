@@ -33,15 +33,21 @@ export default class UserDao {
   async loginUser(user){
     try {
       const { email, password } = user;
-      const userExist = await userModel.findOne({email}); 
-      if(userExist){
+      const userExist = await userModel.findOne({ email });
+      if (userExist) {
         const passValid = isValidPassword(password, userExist);
-        if(!passValid) return false
-        else return userExist;
-      } return false
+        if (!passValid) return false;
+        else {
+          const currentDate = new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString();
+          userExist.last_connection = currentDate;
+          await userExist.save(); 
+          return userExist;
+        }
+      }
+      return false;
     } catch (error) {
-      logger.error(error.message)
-      throw new Error(error.message)
+      logger.error(error.message);
+      throw new Error(error.message);
     }
   } 
 
@@ -102,5 +108,12 @@ async updateUserPasswordAndEncrypt(email, newPassword) {
     throw error;
   }
 }
-}
 
+async updateUser(uid, updateData){
+  try {
+      return await userModel.updateOne({ _id: uid }, { $set: updateData })
+  } catch (error) {
+      logger.error(error)
+  }
+}
+}

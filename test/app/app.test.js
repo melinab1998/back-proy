@@ -1,6 +1,6 @@
 import app from '../../src/app.js';
 import request from 'supertest';
-import { fakerES as faker } from '@faker-js/faker';
+import { fakerES as faker } from '@faker-js/faker'; 
 
 const doc = {
     title: faker.commerce.productName(),

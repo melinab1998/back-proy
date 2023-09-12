@@ -35,7 +35,25 @@ const usersSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
     default: false
-  }
+  },
+  documents:[{
+    name: {
+        type: String,
+        required: true
+    },
+    reference: {
+        type: String,
+        required: true
+    },
+    _id: false
+  }], 
+  last_connection:{
+    type: String
+  },
+  uploadedDocuments:{
+    type: Boolean,
+    default: false
+  }  
 })
 
 export const userModel = mongoose.model('Users',usersSchema)
