@@ -115,6 +115,94 @@ paths:
         "404":
           description: El ID no fue encontrado
 
+  /api/products/sort/up:
+    get:
+      summary: Obtener todos los productos ordenados por precio ascendente
+      tags:
+        - Productos
+      responses:
+        "200":
+          description: Los productos fueron obtenidos correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+        "500":
+          description: Error del servidor
+
+  /api/products/sort/down:
+    get:
+      summary: Obtener todos los productos ordenados por precio descendiente
+      tags:
+        - Productos
+      responses:
+        "200":
+          description: Los productos fueron obtenidos correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+        "500":
+          description: Error del servidor
+
+  /api/products/search/{key}/{value}:
+    get:
+      summary: Buscar productos por campo y valor
+      tags:
+        - Productos
+      parameters:
+        - name: key
+          in: path
+          required: true
+          description: Nombre del campo por el cual buscar 
+          schema:
+            type: string
+        - name: value
+          in: path
+          required: true
+          description: Valor a buscar en el campo especificado
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Los productos fueron encontrados correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+        "404":
+          description: No se encontraron productos que coincidan con la búsqueda
+        "500":
+          description: Error del servidor
+
+  /api/products/mockingproducts:
+    post:
+      summary: Crear productos de prueba
+      tags:
+        - Productos
+      requestBody:
+        required: false
+      responses:
+        "201":
+          description: Productos de prueba creados exitosamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+        "400":
+          description: Solicitud incorrecta
+        "500":
+          description: Error del servidor
+
+
 components:
   schemas:
     Product:

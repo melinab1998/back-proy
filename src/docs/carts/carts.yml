@@ -1,5 +1,5 @@
 paths:
-  /api/cart/:
+  /api/carts/:
     get:
       summary: Obtener todos los carritos
       tags:
@@ -15,8 +15,9 @@ paths:
                   $ref: "#components/schemas/Cart"
         "500":
           description: Error del servidor
+
     post:
-      summary: Crear un carrito 
+      summary: Crear un carrito
       tags:
         - Carritos
       responses:
@@ -30,7 +31,8 @@ paths:
                   $ref: "#components/schemas/Cart"
         "500":
           description: Error del servidor
-  /api/cart/{id}:
+
+  /api/carts/{id}:
     get:
       summary: Obtener un carrito por su ID
       tags:
@@ -53,7 +55,8 @@ paths:
                   $ref: "#components/schemas/Cart"
         "400":
           description: El ID no fue encontrado
-  /api/cart/{cid}: 
+
+  /api/carts/{cid}:
     delete:
       summary: Eliminar todos los productos del carrito
       tags: 
@@ -76,7 +79,8 @@ paths:
                   $ref: "#components/schemas/Cart"
         "400":
           description: El ID no fue encontrado
-  /api/cart/{cid}/purchase:
+
+  /api/carts/{cid}/purchase:
     post:
       summary: Comprar un carrito por su ID
       tags:
@@ -99,7 +103,8 @@ paths:
                   $ref: "#components/schemas/Cart"
         "400":
           description: El ID no fue encontrado
-  /api/cart/{cid}/products/{pid}:
+
+  /api/carts/{cid}/products/{pid}:
     post:
       summary: Añadir producto al carrito
       tags:
@@ -128,6 +133,7 @@ paths:
                   $ref: "#components/schemas/Cart"
         "400":
           description: El ID no fue encontrado
+
     delete:
       summary: Eliminar un producto del carrito
       tags:
@@ -156,6 +162,7 @@ paths:
                   $ref: "#components/schemas/Cart"
         "400":
           description: El ID no fue encontrado
+
     put:
       summary: Actualizar la cantidad del producto
       tags:
@@ -188,8 +195,6 @@ paths:
                 type: array
                 items:
                   $ref: "#components/schemas/Cart"
-        "400":
-          description: El ID no fue encontrado
 
 components:
   schemas:
@@ -257,6 +262,7 @@ components:
         quantity:
           type: integer
           description: La cantidad del producto en el carrito
+
   requestBodies:
       updateCart:
         type: object

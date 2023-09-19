@@ -1,4 +1,4 @@
-import {getByIdService} from "../services/user.services.js";
+import {getAllUsersService, getByIdService, deleteUsersService} from "../services/user.services.js";
 import userDTO from "../persistence/dto/user.dto.js";
 import {logger} from '../utils/logger.js'
 import UserDao from "../persistence/dao/mongodb/user.dao.js";
@@ -16,27 +16,6 @@ export const registerResponse = (req, res, next)=>{
         next(error);
     }
 };
-
-/* export const loginResponse = async(req, res, next)=>{
-    try { */
-       /*  const user = await userDao.getById(req.session.passport.user);
-        const { first_name, last_name, email, age, role } = user; */
-        /*  res.json({
-            msg: 'Login OK', */
-            /* session: req.session,
-            userData: {
-                first_name,
-                last_name,
-                email,
-                age,
-                role
-            } */
-   /*      }) 
-    } catch (error) {
-        logger.error(error.message)
-        next(error);
-    }
-} */
 
 export const loginResponse = async (req, res, next) => {
     try {
@@ -157,7 +136,23 @@ export const uploadDocuments = async (req, res) => {
     }
 };
   
+export const getAllUsers = async (req, res, next) => {
+    try {
+      const users = await getAllUsersService()
+      const userDtos = users.map(user => new userDTO(user));
+      res.status(200).json(userDtos);
+    } catch (error) {
+    logger.error(error);
+      next(error);
+    }
+};
 
-  
-  
-  
+export const deleteUsers = async (req, res, next) => {
+    try {
+      const deletedCount = await deleteUsersService(); 
+      res.status(200).json({ message: `${deletedCount} usuarios eliminados`});
+    } catch (error) {
+      logger.error(error.message);
+      next(error);
+    }
+};

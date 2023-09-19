@@ -7,7 +7,6 @@ import handlebars from "express-handlebars";
 import MongoStore from 'connect-mongo';
 import cookieParser from 'cookie-parser';
 import { __dirname } from "./path.js";
-/* import { Server } from 'socket.io'; */
 import productR from "./router/product.routes.js";
 import viewsRouter from "./router/views.routes.js"
 import usersRouter from './router/user.routes.js'
@@ -18,8 +17,6 @@ import { errorHandler } from './middlewares/errorHandler.js';
 import passport from 'passport';
 import './passport/local.js'
 import './passport/github.js'
-/* import ProductManager from "./dao/filesystem/products.dao.js"; */
-/* const product = new ProductManager(); */
 import { Command } from 'commander';    
 import {logger} from './utils/logger.js'
 import swaggerUI from 'swagger-ui-express';
@@ -76,8 +73,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/api/products", productR)
-app.use("/api/cart", CartR)
-app.use('/users', usersRouter)
+app.use("/api/carts", CartR)
+app.use('/api/users', usersRouter)
 app.use("/views", viewsRouter)
 app.use("/loggerTest", loggerRouter)
 app.use(errorHandler);
@@ -88,32 +85,3 @@ app.listen(PORT, ()=>{
  
 export default app;
 
-/* const socketServer = new Server(httpServer);  */
-
-/* socketServer.on("connection", async(socket) => {
-    console.log("Usuario Conectado", socket.id);
-    socket.on('disconnect', ()=>{
-        console.log("Usuario Desconectado");
-    });
-
-    const allProducts = await product.getProducts()
-
-    socketServer.emit("productos", allProducts)
-
-
-    //Agregar productos
-
-    socket.on("newProduct", (obj) => {
-        allProducts.push(obj);
-        socketServer.emit("productos", allProducts);  
-    });
-
-    //Eliminar productos por su nombre
-
-    socket.on("newProducts", (deleteProd) => {
-        let filter = allProducts.filter(prod => prod.title != deleteProd)
-        socketServer.emit("productos", filter);
-    });
-});
-
- */

@@ -97,18 +97,6 @@ import {
             next(error);
             }
       }
-/* 
-    export const updateCartController = async (req, res, next) => {
-      try{
-        const cid = req.params.cid
-        const products = req.body
-        const cart = await updateCartService(cid, { products })
-        res.json(cart);
-      }catch (error) {
-        next(error);
-      }
-    } */
-       
 
     export const updateProductQtyController = async (req, res, next) => {
       
@@ -180,13 +168,12 @@ import {
           res.status(200).send({ newTicket });
         }
       } catch (error) {
-        console.log(error);
+        logger.error(error.message)
         res.status(500).send({ error: 'Error al enviar el correo electrónico' });
       }
   
       for (const item of ticket) {
         const productId = item.product._id;
-        console.log({ item: productId });
         await deleteProductToCartService(req.params.cid, productId);
       }
     } catch (error) {

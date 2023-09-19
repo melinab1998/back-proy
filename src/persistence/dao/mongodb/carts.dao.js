@@ -70,30 +70,6 @@ class CartManager {
         }
     }
 
-//Eliminar producto de un carrito  
-
-/*     deleteProductFromCart = async (cid, pid) => {
-        try {
-            const cart = await cartModel.findById(cid)
-            if(!cart) return 'No se encontró el carrito';
-            const product = await products.getProductsById(pid);
-            const productIndex = cart.products.findIndex(prod => prod.product.equals(product._id));
-      
-            if (productIndex !== -1) {
-              cart.products.splice(productIndex, 1);
-              await cart.save();
-              console.log('Producto borrado de carrito');
-              return cart;
-            } else {
-              console.log('No se encontró el producto en el carrito');
-              return null;
-            }
-      
-          } catch(error) {
-            console.log(error);
-          }
-    } */
-
     deleteProductFromCart = async (cid, pid) => {
         try {
           const cart = await cartModel.findById(cid)
@@ -107,10 +83,10 @@ class CartManager {
           if (productIndex !== -1) {
             cart.products.splice(productIndex, 1);
             await cart.save();
-            console.log('Producto borrado de carrito');
+            logger.info('Producto borrado de carrito');
             return cart;
           } else {
-            console.log('No se encontró el producto en el carrito');
+            logger.info('No se encontró el producto en el carrito');
             return null;
           }
       
@@ -125,25 +101,13 @@ class CartManager {
     deleteAllProductsFromCart = async (cid) => {
     try {
       await cartModel.updateOne({ _id: cid }, { products: []});
-      console.log('Carrito vaciado');
+      logger.info('Carrito vaciado');
     } catch(error) {
       logger.error(error.message)
       throw new Error(error.message)
     }
   }
 
-/* 
-
-//Actualizar carrito con nuevos productos
-
-    updateCart = async (cid, newData) => {
-
-      return await cartModel.updateOne(
-        { _id: cid },
-        { $set: { products: newData.products, quantity: newData.quantity }}
-      )
-    }
-*/
 
 //Actualizar cantidad de un producto
 

@@ -23,7 +23,7 @@ export const sendGmail = async (emailOptions, ticketData) => {
           `
     }
     const response = await transporter.sendMail(gmailOptions);
-    console.log('Email enviado!');
+    logger.info('Email enviado!');
     return response;
   } catch (error) {
     logger.error(error.message)
@@ -48,7 +48,7 @@ export const sendPasswordResetEmail = async (recipientEmail, resetToken) => {
     };
 
     const response = await transporter.sendMail(mailOptions);
-    console.log('Email enviado!');
+    logger.info('Email enviado!');
     return response;
   } catch (error) {
     logger.error(error.message);
@@ -56,3 +56,49 @@ export const sendPasswordResetEmail = async (recipientEmail, resetToken) => {
   }
 };
 
+// 
+
+export const sendAccountDeletionEmail = async (recipientEmail) => {
+  try {
+    const mailOptions = {
+      from: config.EMAIL,
+      to: recipientEmail,
+      subject: 'Eliminación de Cuenta',
+      html: `
+        <p>Lamentamos informarte que tu cuenta ha sido eliminada.</p>
+        <p>Si consideras que ha habido un error o deseas obtener más información, por favor contáctanos.</p>
+      `
+    };
+
+    const response = await transporter.sendMail(mailOptions);
+    logger.info(`Email de eliminación de cuenta enviado a ${recipientEmail}`);
+    return response;
+  } catch (error) {
+    logger.error(error.message);
+    throw error;
+  }
+};
+
+// 
+
+export const sendProductDeletionEmail = async (ownerEmail, productName) => {
+  try {
+    const mailOptions = {
+      from: config.EMAIL,
+      to: ownerEmail,
+      subject: 'Notificación de Eliminación de Producto',
+      html: `
+        <p>Hola,</p>
+        <p>Queremos informarte que tu producto "${productName}" ha sido eliminado.</p>
+        <p>Si consideras que ha habido un error o deseas obtener más información, por favor contáctanos.</p>
+      `
+    };
+
+    const response = await transporter.sendMail(mailOptions);
+    logger.info(`Email de notificación de eliminación de producto enviado a ${ownerEmail}`);
+    return response;
+  } catch (error) {
+    logger.error(error.message);
+    throw error;
+  }
+};

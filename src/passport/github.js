@@ -7,7 +7,7 @@ const userDao = new UserDao();
 const strategyOptions = {
     clientID: 'Iv1.6317c77eb48c913d',
     clientSecret: 'b2d827a10541b4d1fdad61f4d5660bb8ce9d03d4',
-    callbackURL: 'http://localhost:8080/users/profile-github'
+    callbackURL: 'http://localhost:8080/api/users/profile-github'
 };
 
 const registerOrLogin = async(accessToken, refreshToken, profile, done) =>{

@@ -48,7 +48,7 @@ const usersSchema = new mongoose.Schema({
     _id: false
   }], 
   last_connection:{
-    type: String
+    type: Date
   },
   uploadedDocuments:{
     type: Boolean,

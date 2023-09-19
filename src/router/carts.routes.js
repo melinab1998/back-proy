@@ -9,7 +9,6 @@ import {
     addProductToCartController,
     deleteProductToCartController,
     deleteAllProductsFromCartController,
-    /* updateCartController, */
     updateProductQtyController,
     ticketController
 } from '../controllers/carts.controllers.js';
@@ -24,7 +23,6 @@ router.post('/:cid/products/:pid', roleMiddleware(['user','premium']), addProduc
 router.post('/:cid/purchase', isAuthenticated, ticketController) 
 router.delete('/:cid/products/:pid', deleteProductToCartController)
 router.delete('/:cid', deleteAllProductsFromCartController)
-/* router.put('/:cid',  updateCartController) */
 router.put('/:cid/products/:pid', updateProductQtyController)
 
 export default router;

@@ -1,5 +1,6 @@
 import { ProductsModel } from "./models/products.model.js";
 import {logger} from '../../../utils/logger.js'
+import {userModel} from './models/user.model.js'
 
 export default class ProductsDaoMongoDB {
 
@@ -42,11 +43,22 @@ export default class ProductsDaoMongoDB {
 
  async addProducts(obj, ownerId) {
   try {
-      const response = await ProductsModel.create({ ...obj, owner: ownerId });
-      return response;
+    const owner = await userModel.findById(ownerId);
+    if (!owner) {
+      throw new Error('Usuario propietario no encontrado.');
+    }
+    const isPremiumOwner = owner.role === 'premium';
+
+    const response = await ProductsModel.create({
+      ...obj,
+      owner: ownerId,
+      isPremium: isPremiumOwner,
+    });
+
+    return response;
   } catch (error) {
-      logger.error(error.message);
-      throw new Error(error.message);
+    logger.error(error.message);
+    throw new Error(error.message);
   }
 }
 

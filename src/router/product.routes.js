@@ -24,6 +24,6 @@ router.get('/search/:key/:value', getProductByController);
 router.post('/', roleMiddleware(['admin', 'premium']), createController);  
 router.post('/mockingproducts', createProductsCtr)
 router.put('/:id', roleMiddleware(['admin', 'premium']), checkOwnership, updateController); 
-router.delete('/:id', roleMiddleware(['admin', 'premium']), checkOwnershipOrAdmin, deleteController);
+router.delete('/:id', roleMiddleware(['admin']), checkOwnershipOrAdmin, deleteController);
 
 export default router;

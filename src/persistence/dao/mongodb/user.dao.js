@@ -1,5 +1,6 @@
 import { userModel } from "./models/user.model.js"; 
 import { createHash, isValidPassword } from '../../../path.js';
+import { sendAccountDeletionEmail } from '../../../controllers/email.controller.js'
 import { cartModel } from "./models/carts.model.js";
 import {logger} from '../../../utils/logger.js'
 import bcrypt from 'bcrypt';
@@ -30,7 +31,7 @@ export default class UserDao {
     }
   }
 
-  async loginUser(user){
+  async loginUser(user) {
     try {
       const { email, password } = user;
       const userExist = await userModel.findOne({ email });
@@ -38,9 +39,9 @@ export default class UserDao {
         const passValid = isValidPassword(password, userExist);
         if (!passValid) return false;
         else {
-          const currentDate = new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString();
+          const currentDate = new Date();
           userExist.last_connection = currentDate;
-          await userExist.save(); 
+          await userExist.save();
           return userExist;
         }
       }
@@ -49,12 +50,11 @@ export default class UserDao {
       logger.error(error.message);
       throw new Error(error.message);
     }
-  } 
+  }
 
   async getById(id){
     try {
       const userExist = await userModel.findById(id)
-      // console.log(userExist);
       if(userExist){
        return userExist
       } return false
@@ -67,7 +67,6 @@ export default class UserDao {
   async getByEmail(email){
     try {
       const userExist = await userModel.findOne({email}); 
-      console.log(userExist);
       if(userExist){
        return userExist
       } return false
@@ -116,4 +115,29 @@ async updateUser(uid, updateData){
       logger.error(error)
   }
 }
+
+ async deleteUsers() {
+  try {
+    const twoDaysAgo = new Date();
+    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+
+    const deletedUsers = await userModel.find({
+      last_connection: { $lt: twoDaysAgo },
+    }).select('email');
+
+    const result = await userModel.deleteMany({
+      last_connection: { $lt: twoDaysAgo },
+    });
+
+    for (const deletedUser of deletedUsers) {
+      await sendAccountDeletionEmail(deletedUser.email);
+    }
+
+    return result.deletedCount;
+  } catch (error) {
+    logger.error(error);
+  }
+}    
+
 }
+

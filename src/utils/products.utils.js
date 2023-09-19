@@ -11,6 +11,7 @@ export const generateProduct = () => {
         category: faker.commerce.department(),
         thumbnails: [
             faker.image.url()
-          ]
+        ],
+        owner: "650899045bc71656c505f14e" 
     };
 };

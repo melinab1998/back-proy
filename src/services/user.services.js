@@ -55,3 +55,13 @@ export const createUserService = async (obj) => {
       throw new Error(error.message);
     }
   };
+
+  export const deleteUsersService = async () => {
+    try {
+      const deleteUs = await userRepository.deleteUsers();
+      return deleteUs;
+    } catch (error) {
+      logger.error(error.message)
+      throw new Error(error.message);
+    }
+  };

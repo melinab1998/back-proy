@@ -29,7 +29,7 @@ describe('Testing Integral Del Proyecto', () => {
     let authCookie;
     
     beforeAll(async () => {
-        const authResponse = await request(app).post("/users/login").send({
+        const authResponse = await request(app).post("/api/users/login").send({
             email: "ana@gmail.com",
             password: "1234",
         });
@@ -71,7 +71,7 @@ describe('Testing Integral Del Proyecto', () => {
 
      test('[GET] /api/products/:id | Obtener producto por su ID', async () => {
     
-        const prodId = '64f7b818106d8b7c4b15c8e0'; 
+        const prodId = '6508c76e3f0ddaa861db39ec'; 
         const response = await request(app).get(`/api/products/${prodId}`);
         
         expect(response.statusCode).toBe(200);
@@ -81,19 +81,19 @@ describe('Testing Integral Del Proyecto', () => {
 
   describe('TEST DE CARRITOS', () => {
 
-    test('[GET] /api/cart/ | Obtener todos los carritos', async () => {
+    test('[GET] /api/carts/ | Obtener todos los carritos', async () => {
     
-        const response = await request(app).get('/api/cart');
+        const response = await request(app).get('/api/carts');
         expect(response.statusCode).toBe(200);
         expect(Array.isArray(response.body)).toBe(true);
 
     }); 
 
-    test('[GET] /api/cart/:id | Obtener carrito por su ID', async () => {
+    test('[GET] /api/carts/:id | Obtener carrito por su ID', async () => {
 
-      const cartId = '64c03f0b035f5664ebd87bb9';
+      const cartId = '6508c0a45fcf40068be581bd';
 
-      const response = await request(app).get(`/api/cart/${cartId}`);
+      const response = await request(app).get(`/api/carts/${cartId}`);
 
       expect(response.statusCode).toBe(200);
 
@@ -101,9 +101,9 @@ describe('Testing Integral Del Proyecto', () => {
 
     });
   
-    test('[POST] /api/cart/ | Crear un carrito', async () => {
+    test('[POST] /api/carts/ | Crear un carrito', async () => {
 
-      const response = await request(app).post('/api/cart/').send({ products: [] });
+      const response = await request(app).post('/api/carts/').send({ products: [] });
     
       expect(response.statusCode).toBe(200);
   
@@ -117,14 +117,14 @@ describe('Testing Integral Del Proyecto', () => {
       let authCookie;
       
       beforeAll(async () => {
-        const authResponse = await request(app).post("/users/login").send({
+        const authResponse = await request(app).post("/api/users/login").send({
             email: "ana@gmail.com",
             password: "1234",
         });
         authCookie = authResponse.headers["set-cookie"][0];
       });
 
-      test('[POST] /users/login/ | Loguear un usuario', async () => {
+      test('[POST] /api/users/login/ | Loguear un usuario', async () => {
         
         const userCredentials = {
           email: 'ana@gmail.com',
@@ -132,7 +132,7 @@ describe('Testing Integral Del Proyecto', () => {
         };
       
         const response = await request(app)
-          .post('/users/login')
+          .post('/api/users/login')
           .send(userCredentials);
       
         expect(response.statusCode).toBe(200);
@@ -140,20 +140,20 @@ describe('Testing Integral Del Proyecto', () => {
   
       }); 
   
-      test('[POST] /users/register | Registrar un usuario', async () => {
+      test('[POST] /api/users/register | Registrar un usuario', async () => {
 
         const response = await request(app)
-        .post('/users/register')
+        .post('/api/users/register')
         .send(userData);
 
         expect(response.statusCode).toBe(200);
         expect(response.body).toHaveProperty('msg', 'Register OK');
       });
     
-      test('[GET] /users/current/ | Obtener datos del usuario logueado', async () => {
+      test('[GET] /api/users/current/ | Obtener datos del usuario logueado', async () => {
   
         const response = await request(app)
-        .get('/users/current')
+        .get('/api/users/current')
         .set('Cookie', [authCookie]);
     
         expect(response.statusCode).toBe(200);
@@ -161,7 +161,7 @@ describe('Testing Integral Del Proyecto', () => {
         expect(response.body).toEqual({
           'Usuario Actual': {
             Nombre: "Analia",
-            Apellido: "Garavano",
+            Email: "ana@gmail.com",
             Rol: "premium"
           },
         });

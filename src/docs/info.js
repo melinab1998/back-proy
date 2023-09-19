@@ -10,5 +10,5 @@ export const info = {
             { url: 'http://localhost:8080' }
         ]
     },
-    apis: ['./src/docs/products/products.yml', './src/docs/carts/carts.yml']
+    apis: ['./src/docs/products/products.yml', './src/docs/carts/carts.yml', './src/docs/users/users.yml']
 }

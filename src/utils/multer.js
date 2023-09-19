@@ -1,4 +1,5 @@
 import multer from "multer";
+import {logger} from './logger.js'
 import fs from 'fs';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -65,8 +66,8 @@ const fileFilter = function(req, file, cb) {
 export const uploader = multer({
     storage,
     fileFilter,
-    onError: function(err, next){
-        console.log(err)
+    onError: function(error, next){
+        logger.error(error.message)
         next()
     }
 })
