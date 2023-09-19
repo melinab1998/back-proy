@@ -4,6 +4,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
+    "start": "node src/app.js",
     "dev": "nodemon src/app.js",
     "test:win": "set NODE_OPTIONS=--experimental-vm-modules && npx jest /test/app/app.test.js"
   },
@@ -14,7 +15,6 @@
     "@faker-js/faker": "^8.0.2",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
-    "boostrap": "^2.0.0",
     "commander": "^11.0.0",
     "connect-mongo": "^5.0.0",
     "cookie-parser": "^1.4.6",
